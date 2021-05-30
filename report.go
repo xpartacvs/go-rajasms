@@ -27,9 +27,10 @@ type reportWrapper struct {
 }
 
 type Report interface {
-	GetId() (string, error)
-	GetMsisdn() (string, error)
-	GetPrice() (uint, error)
+	GetId() string
+	GetMsisdn() string
+	GetPrice() uint
+	GetError() error
 }
 
 func (r report) GetError() error {
@@ -39,20 +40,23 @@ func (r report) GetError() error {
 	return nil
 }
 
-func (r report) GetId() (string, error) {
+func (r report) GetId() string {
 	if err := r.GetError(); err != nil {
-		return "", err
+		return ""
 	}
-	return string(r.Id), nil
+	return string(r.Id)
 }
 
-func (r report) GetMsisdn() (string, error) {
-	return r.Msisdn, r.GetError()
+func (r report) GetMsisdn() string {
+	if err := r.GetError(); err != nil {
+		return ""
+	}
+	return r.Msisdn
 }
 
-func (r report) GetPrice() (uint, error) {
+func (r report) GetPrice() uint {
 	if err := r.GetError(); err != nil {
-		return 0, err
+		return 0
 	}
-	return uint(r.Price), nil
+	return uint(r.Price)
 }
