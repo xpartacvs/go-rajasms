@@ -100,12 +100,6 @@ func (e envelope) Send() ([]Report, error) {
 		return nil, errors.New("error on marshal the request body")
 	}
 
-	// resp, err := http.Post(endpoint, "application/json", bytes.NewBuffer(reqBody))
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// defer resp.Body.Close()
-
 	reqPost, err := http.NewRequest(
 		http.MethodPost,
 		fmt.Sprintf("%s%s", e.BaseUrl, "/sms/api_sms_masking_send_json.php"),
