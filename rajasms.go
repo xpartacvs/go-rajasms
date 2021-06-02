@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	wkt "github.com/xpartacvs/go-waktu"
 )
 
 type waktu time.Time
@@ -36,12 +38,7 @@ func validateCredential(url, key string) error {
 func (r *waktu) UnmarshalJSON(b []byte) error {
 	s := strings.Trim(string(b), "\"")
 
-	loc, err := time.LoadLocation("Asia/Jakarta")
-	if err != nil {
-		return err
-	}
-
-	t, err := time.ParseInLocation("2006-01-02", s, loc)
+	t, err := time.ParseInLocation(wkt.MySQLDate, s, wkt.WIB)
 	if err != nil {
 		return err
 	}
@@ -52,7 +49,7 @@ func (r *waktu) UnmarshalJSON(b []byte) error {
 
 func (r waktu) MarshalJSON() ([]byte, error) {
 	t := time.Time(r)
-	s := fmt.Sprintf("\"%s\"", t.Format("2006-01-02 15:04:05"))
+	s := fmt.Sprintf("\"%s\"", t.Format(wkt.MySQLDateTime))
 	return []byte(s), nil
 }
 
