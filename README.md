@@ -18,7 +18,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/xpartacvs/go-rajasms2"
+    "github.com/xpartacvs/go-rajasms"
 )
 
 func main() {
